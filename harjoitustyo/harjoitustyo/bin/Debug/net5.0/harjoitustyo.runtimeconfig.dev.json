@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\topia\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\topia\\.nuget\\packages"
+    ]
+  }
+}

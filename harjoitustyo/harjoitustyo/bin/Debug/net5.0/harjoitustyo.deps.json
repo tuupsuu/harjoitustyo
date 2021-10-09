@@ -1,0 +1,250 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "harjoitustyo/1.0.0": {
+        "dependencies": {
+          "Jypeli.FarseerPhysics.NET": "1.0.9",
+          "Jypeli.NET": "10.1.4"
+        },
+        "runtime": {
+          "harjoitustyo.dll": {}
+        }
+      },
+      "Cyotek.Drawing.BitmapFont/2.0.1": {
+        "runtime": {
+          "lib/netcoreapp3.1/Cyotek.Drawing.BitmapFont.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "2.0.1.0"
+          }
+        }
+      },
+      "FontStashSharp/0.9.2": {
+        "dependencies": {
+          "Cyotek.Drawing.BitmapFont": "2.0.1",
+          "StbImageSharp": "2.22.4",
+          "StbTrueTypeSharp": "1.24.7",
+          "System.Numerics.Vectors": "4.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/FontStashSharp.dll": {
+            "assemblyVersion": "0.9.2.0",
+            "fileVersion": "0.9.2.0"
+          }
+        }
+      },
+      "Jypeli.FarseerPhysics.NET/1.0.9": {
+        "dependencies": {
+          "Jypeli.NET": "10.1.4"
+        },
+        "runtime": {
+          "lib/net5.0/Jypeli.FarseerPhysics.dll": {
+            "assemblyVersion": "1.0.9.0",
+            "fileVersion": "1.0.9.0"
+          }
+        }
+      },
+      "Jypeli.NET/10.1.4": {
+        "dependencies": {
+          "FontStashSharp": "0.9.2",
+          "System.Drawing.Common": "5.0.1"
+        },
+        "runtime": {
+          "lib/net5.0/Jypeli.dll": {
+            "assemblyVersion": "10.1.4.0",
+            "fileVersion": "10.1.4.0"
+          },
+          "lib/net5.0/MonoGame.Framework.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/linux-x64/native/libSDL2-2.0.so.0": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-x64/native/libopenal.so.1": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx/native/libSDL2-2.0.0.dylib": {
+            "rid": "osx",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx/native/libopenal.1.dylib": {
+            "rid": "osx",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/SDL2.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "2.0.14.0"
+          },
+          "runtimes/win-x64/native/soft_oal.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/SDL2.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "2.0.14.0"
+          },
+          "runtimes/win-x86/native/soft_oal.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Microsoft.NETCore.Platforms/5.0.0": {},
+      "Microsoft.Win32.SystemEvents/5.0.0": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "5.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Win32.SystemEvents.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.20.51904"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.20.51904"
+          }
+        }
+      },
+      "StbImageSharp/2.22.4": {
+        "runtime": {
+          "lib/netstandard2.0/StbImageSharp.dll": {
+            "assemblyVersion": "2.22.4.0",
+            "fileVersion": "2.22.4.0"
+          }
+        }
+      },
+      "StbTrueTypeSharp/1.24.7": {
+        "runtime": {
+          "lib/netstandard2.0/StbTrueTypeSharp.dll": {
+            "assemblyVersion": "1.24.7.0",
+            "fileVersion": "1.24.7.0"
+          }
+        }
+      },
+      "System.Drawing.Common/5.0.1": {
+        "dependencies": {
+          "Microsoft.Win32.SystemEvents": "5.0.0"
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/System.Drawing.Common.dll": {
+            "assemblyVersion": "5.0.0.1",
+            "fileVersion": "5.0.321.7212"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll": {
+            "rid": "unix",
+            "assetType": "runtime",
+            "assemblyVersion": "5.0.0.1",
+            "fileVersion": "5.0.321.7212"
+          },
+          "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "5.0.0.1",
+            "fileVersion": "5.0.321.7212"
+          }
+        }
+      },
+      "System.Numerics.Vectors/4.5.0": {}
+    }
+  },
+  "libraries": {
+    "harjoitustyo/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Cyotek.Drawing.BitmapFont/2.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8C8Vdvf8p6RIOBNFE99ZNPWFxwV/ZT1wk11cajuL3+6/e5DBGPHe+ZjxLu2efTWQ1YvfLh4KpP2epUZ9z/WcFQ==",
+      "path": "cyotek.drawing.bitmapfont/2.0.1",
+      "hashPath": "cyotek.drawing.bitmapfont.2.0.1.nupkg.sha512"
+    },
+    "FontStashSharp/0.9.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Zbu7fHrp1cuYqTTPucvbYlWKD9aeVVX/oecbEBd0qkm2ZCZU5KXmmeGEzOlC8OwGGwa8MNiEwwjLAaZ8Q7KjKQ==",
+      "path": "fontstashsharp/0.9.2",
+      "hashPath": "fontstashsharp.0.9.2.nupkg.sha512"
+    },
+    "Jypeli.FarseerPhysics.NET/1.0.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DIRQOt+696PmpmwMeGBanZwVEOgLUFIiTKOiO3WnXH/6YGAo8qusBY1ANFsPg4xYZa43D70kwVydKhrIIF65kg==",
+      "path": "jypeli.farseerphysics.net/1.0.9",
+      "hashPath": "jypeli.farseerphysics.net.1.0.9.nupkg.sha512"
+    },
+    "Jypeli.NET/10.1.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ymq9OW2ibUbFYf/21cFKpUonFr1Y8AToGSyFEFbS8iTdH5SFFi7Q+Y9omIoNROmLtNL1k/x6XfIeGg7T9fmbVg==",
+      "path": "jypeli.net/10.1.4",
+      "hashPath": "jypeli.net.10.1.4.nupkg.sha512"
+    },
+    "Microsoft.NETCore.Platforms/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VyPlqzH2wavqquTcYpkIIAQ6WdenuKoFN0BdYBbCWsclXacSOHNQn66Gt4z5NBqEYW0FAPm5rlvki9ZiCij5xQ==",
+      "path": "microsoft.netcore.platforms/5.0.0",
+      "hashPath": "microsoft.netcore.platforms.5.0.0.nupkg.sha512"
+    },
+    "Microsoft.Win32.SystemEvents/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Bh6blKG8VAKvXiLe2L+sEsn62nc1Ij34MrNxepD2OCrS5cpCwQa9MeLyhVQPQ/R4Wlzwuy6wMK8hLb11QPDRsQ==",
+      "path": "microsoft.win32.systemevents/5.0.0",
+      "hashPath": "microsoft.win32.systemevents.5.0.0.nupkg.sha512"
+    },
+    "StbImageSharp/2.22.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0dOXIj3OM8oGxtfqZHZdLJRnV7FjP4VToeCprpyVXbWpct6DplgWq6YKVFA5hAYVs8hzvGekA97Qg8C3exeVYg==",
+      "path": "stbimagesharp/2.22.4",
+      "hashPath": "stbimagesharp.2.22.4.nupkg.sha512"
+    },
+    "StbTrueTypeSharp/1.24.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4hmKw+Fq22Fs8GI8o1U7SUGw7iNTYVNc476o/rxmDVgIsQgQX0nNvlG1hUEhvC0ouNmoJq32yclQko+n67bc7A==",
+      "path": "stbtruetypesharp/1.24.7",
+      "hashPath": "stbtruetypesharp.1.24.7.nupkg.sha512"
+    },
+    "System.Drawing.Common/5.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3IN8zWk395Qu+7wnoTbebEjdP3izZBBKAahgWuC0jp9tCgTdUFN6KsrqQl0I3L+ptZD/LvwKjgFp1u+x3+p+DA==",
+      "path": "system.drawing.common/5.0.1",
+      "hashPath": "system.drawing.common.5.0.1.nupkg.sha512"
+    },
+    "System.Numerics.Vectors/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QQTlPTl06J/iiDbJCiepZ4H//BVraReU4O4EoRw1U02H5TLUIT7xn3GnDp9AXPSlJUDyFs4uWjWafNX6WrAojQ==",
+      "path": "system.numerics.vectors/4.5.0",
+      "hashPath": "system.numerics.vectors.4.5.0.nupkg.sha512"
+    }
+  }
+}
