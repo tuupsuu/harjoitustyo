@@ -8,19 +8,17 @@ using System.Collections.Generic;
 public class harjoitustyo : PhysicsGame
 {
     private int kenttaNro = 1;
-    private static double nopeus = 200;
+    private static double nopeus = 100;
     private PhysicsObject pelaaja;
     private PhysicsObject maali;
     private Vector nopeusYlos = new Vector(0, nopeus);
     private Vector nopeusVasemmalle = new Vector(-nopeus, 0);
     private Vector nopeusAlas = new Vector(0, -nopeus);
     private Vector nopeusOikealle = new Vector(nopeus, 0);
-    // int juoksuKerroin = 2;
     public override void Begin()
     {
         // Kirjoita ohjelmakoodisi tähän
         SeuraavaKentta();
-
     }
 
 
@@ -71,27 +69,28 @@ public class harjoitustyo : PhysicsGame
 
     private void LuoPelaaja()
     {
-        // Keyboard.Listen(Key.Space, ButtonState.Pressed, Seuraava, "seuraava kenttä");
+        Keyboard.Listen(Key.Space, ButtonState.Pressed, Seuraava, "seuraava kenttä");
 
         pelaaja = new PhysicsObject(50, 50, Shape.Rectangle); // TODO: luo pelaajalle oma sprite
         pelaaja.Color = Color.DarkBlue;
         Add(pelaaja);
 
-        Keyboard.Listen(Key.A, ButtonState.Down, Liiku, "liikuttaa pelaajaa vasemmalle", pelaaja, nopeusVasemmalle);
-        Keyboard.Listen(Key.A, ButtonState.Released, Liiku, null, pelaaja, Vector.Zero);
+        Keyboard.Listen(Key.A, ButtonState.Down, Liiku, "liikuttaa pelaajaa vasemmalle", nopeusVasemmalle);
+        Keyboard.Listen(Key.A, ButtonState.Released, Pysayta, null);
 
-        Keyboard.Listen(Key.D, ButtonState.Down, Liiku, "liikuttaa pelaajaa oikealle", pelaaja, nopeusOikealle);
-        Keyboard.Listen(Key.D, ButtonState.Released, Liiku, null, pelaaja, Vector.Zero);
+        Keyboard.Listen(Key.D, ButtonState.Down, Liiku, "liikuttaa pelaajaa oikealle", nopeusOikealle);
+        Keyboard.Listen(Key.D, ButtonState.Released, Pysayta, null);
 
-        Keyboard.Listen(Key.W, ButtonState.Down, Liiku, "liikuttaa pelaajaa ylös", pelaaja, nopeusYlos);
-        Keyboard.Listen(Key.W, ButtonState.Released, Liiku, null, pelaaja, Vector.Zero);
+        Keyboard.Listen(Key.W, ButtonState.Down, Liiku, "liikuttaa pelaajaa ylös", nopeusYlos);
+        Keyboard.Listen(Key.W, ButtonState.Released, Pysayta, null);
 
-        Keyboard.Listen(Key.S, ButtonState.Down, Liiku, "liikuttaa pelaajaa alas", pelaaja, nopeusAlas);
-        Keyboard.Listen(Key.S, ButtonState.Released, Liiku, null, pelaaja, Vector.Zero);
+        Keyboard.Listen(Key.S, ButtonState.Down, Liiku, "liikuttaa pelaajaa alas", nopeusAlas);
+        Keyboard.Listen(Key.S, ButtonState.Released, Pysayta, null);
 
         AddCollisionHandler(pelaaja, Maalissa);
 
         pelaaja.MaxVelocity = 100;
+        pelaaja.Mass = 0.01;
 
         Keyboard.Listen(Key.F1, ButtonState.Pressed, ShowControlHelp, "Näytä ohjeet");
         PhoneBackButton.Listen(ConfirmExit, "Lopeta peli");
@@ -106,9 +105,14 @@ public class harjoitustyo : PhysicsGame
         }
     }
 
-    private void Liiku(PhysicsObject pelaaja, Vector nopeus)
+    private void Liiku(Vector nopeus)
     {
-        pelaaja.Move(nopeus);
+        pelaaja.Push(nopeus);
+    }
+
+    private void Pysayta()
+    {
+        pelaaja.Stop();
     }
 
 
