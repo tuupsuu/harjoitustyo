@@ -9,8 +9,8 @@ public class harjoitustyo : PhysicsGame
 {
     private int kenttaNro = 1;
     private static double nopeus = 100;
-    private PhysicsObject pelaaja;
-    private PhysicsObject maali;
+    private PhysicsObject pelaaja, maali;
+    private AssaultRifle pelaajanAse;
     private Vector nopeusYlos = new Vector(0, nopeus);
     private Vector nopeusVasemmalle = new Vector(-nopeus, 0);
     private Vector nopeusAlas = new Vector(0, -nopeus);
@@ -75,6 +75,22 @@ public class harjoitustyo : PhysicsGame
         pelaaja.Color = Color.DarkBlue;
         Add(pelaaja);
 
+        pelaajanAse = new AssaultRifle(50, 20); // TODO: luo aseelle uusi skin ja ehkä ääniefekti 
+        pelaajanAse.Ammo.Value = 1;
+        pelaajanAse.FireRate = 10;
+        pelaajanAse.ProjectileCollision = AmmusOsui;
+        pelaaja.Add(pelaajanAse);
+
+        LuoOhjaimet();
+
+        AddCollisionHandler(pelaaja, Maalissa);
+
+        pelaaja.MaxVelocity = 100;
+        pelaaja.Mass = 0.01;
+    }
+
+    private void LuoOhjaimet()
+    {
         Keyboard.Listen(Key.A, ButtonState.Down, Liiku, "liikuttaa pelaajaa vasemmalle", nopeusVasemmalle);
         Keyboard.Listen(Key.A, ButtonState.Released, Pysayta, null);
 
@@ -86,15 +102,22 @@ public class harjoitustyo : PhysicsGame
 
         Keyboard.Listen(Key.S, ButtonState.Down, Liiku, "liikuttaa pelaajaa alas", nopeusAlas);
         Keyboard.Listen(Key.S, ButtonState.Released, Pysayta, null);
-
-        AddCollisionHandler(pelaaja, Maalissa);
-
-        pelaaja.MaxVelocity = 100;
-        pelaaja.Mass = 0.01;
+        // yllä pelaajan liikuttaminen, alla pelaajan ampuminen
+        Keyboard.Listen(Key.Left, ButtonState.Pressed, Ammu, "ampuu vasemmalle", pelaajanAse);
+        Keyboard.Listen(Key.Right, ButtonState.Pressed, Ammu, "ampuu oikealle", pelaajanAse);
+        Keyboard.Listen(Key.Up, ButtonState.Pressed, Ammu, "ampuu ylös", pelaajanAse);
+        Keyboard.Listen(Key.Down, ButtonState.Pressed, Ammu, "ampuu alas", pelaajanAse);
 
         Keyboard.Listen(Key.F1, ButtonState.Pressed, ShowControlHelp, "Näytä ohjeet");
         PhoneBackButton.Listen(ConfirmExit, "Lopeta peli");
         Keyboard.Listen(Key.Escape, ButtonState.Pressed, ConfirmExit, "Lopeta peli");
+    }
+
+
+    private void AmmusOsui(PhysicsObject ammus, PhysicsObject kohde)
+    {
+        ammus.Destroy();
+        pelaajanAse.Ammo.Value += 1;
     }
 
     private void Maalissa(PhysicsObject osuvaKohde, PhysicsObject osuttuKohde)
@@ -113,6 +136,15 @@ public class harjoitustyo : PhysicsGame
     private void Pysayta()
     {
         pelaaja.Stop();
+    }
+
+    private void Ammu(AssaultRifle ase)
+    {
+        PhysicsObject ammus = ase.Shoot(); // TODO: luo ammukselle uusi skin
+        if (ammus != null)
+        {
+            ammus.Size *= 3;
+        }
     }
 
 
