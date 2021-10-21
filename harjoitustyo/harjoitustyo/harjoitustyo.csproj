@@ -12,5 +12,11 @@
         <PackageReference Include="Jypeli.FarseerPhysics.NET" Version="1.0.*" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Content\kentta_1_1.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
 

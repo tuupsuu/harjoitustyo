@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class harjoitustyo : PhysicsGame
 {
     private int kenttaNro = 1;
+    private IntMeter vihollistenMaara;
     private static double nopeus = 100;
     private string[] alkuValikko = { "Aloita", "Asetukset", "Lopeta peli" };
     private string[] pauseMenu = { "Jatka", "Asetukset", "Palaa aloitusvalikkoon" };
@@ -35,7 +36,7 @@ public class harjoitustyo : PhysicsGame
     private void SeuraavaKentta()
     {
         ClearAll();
-        LuoPelaaja();
+        LuoPistelaskuri();
 
         if (kenttaNro == 1) LuoKentta(1);
         else if (kenttaNro == 2) LuoKentta(2);
@@ -44,9 +45,26 @@ public class harjoitustyo : PhysicsGame
 
     }
 
+
+    private void LuoPistelaskuri()
+    {
+        {
+            vihollistenMaara = new IntMeter(0);
+            Label laskuri = new Label();
+            laskuri.Title = "Vihollisia jäljellä: ";
+            laskuri.X = 0;
+            laskuri.Y = Level.Top - 40;
+            laskuri.TextColor = Color.Black;
+            laskuri.Color = Color.White;
+            laskuri.BindTo(vihollistenMaara);
+            Add(laskuri);
+        }
+    }
+
+
     private void AsetusMenu()
     {
-        
+        // TODO: luo asetus menu
     }
 
     private void LuoKentta(int a)
@@ -54,48 +72,56 @@ public class harjoitustyo : PhysicsGame
         if (a == 1)
         {
             Level.Background.CreateGradient(Color.BloodRed, Color.SkyBlue); // TODO: luo taustakuva huoneen lattiaksi
-            LuoMaali(Level.Left + 50, 0);
+            vihollistenMaara.Value = 0;
+            TileMap kentta11 = TileMap.FromLevelAsset("kentta_1_1");
+            kentta11.SetTileMethod('M', LuoMaali);
+            kentta11.SetTileMethod('P', LuoPelaaja);
+            kentta11.SetTileMethod('s', LuoSeina);
+            kentta11.SetTileMethod('V', LuoVihu);
+            kentta11.Execute(40, 40);
+            // LuoMaali(Level.Left + 50, 0);
             // maali.Oscillate(Vector.UnitY, 100, 0.2);
         }
         else if (a == 2)
         {
             Level.Background.CreateGradient(Color.Orange, Color.BrightGreen);
-            LuoMaali(0, Level.Top - 50);
+            // LuoMaali(0, Level.Top - 50);
             // maali.Oscillate(Vector.UnitX, 200, 0.4);
         }
         else if (a == 3)
         {
             Level.Background.CreateGradient(Color.White, Color.Black);
-            LuoMaali(Level.Left + 50, Level.Top - 50);
+            // LuoMaali(Level.Left + 50, Level.Top - 50);
         }
 
         Level.CreateBorders();
         Camera.ZoomToLevel();
     }
 
-    private void LuoMaali(double x, double y)
+    private void LuoMaali(Vector paikka, double leveys, double korkeus)
     {
-        maali = new PhysicsObject(50, 50, Shape.Rectangle, x, y);
+        maali = PhysicsObject.CreateStaticObject(leveys, korkeus);
+        maali.Position = paikka;
         maali.Tag = "maali";
-        maali.CanRotate = true;
-        maali.AngularVelocity = 100;
-        maali.MakeStatic();
+        maali.CanRotate = false;
+        maali.Color = Color.Green;
         Add(maali);
     }
 
-    private void LuoPelaaja()
+    private void LuoPelaaja(Vector paikka, double leveys, double korkeus)
     {
         Keyboard.Listen(Key.Enter, ButtonState.Pressed, Seuraava, "seuraava kenttä");
 
-        pelaaja = new PhysicsObject(50, 50, Shape.Rectangle); // TODO: luo pelaajalle oma sprite
+        pelaaja = new PhysicsObject(leveys, korkeus, Shape.Rectangle); // TODO: luo pelaajalle oma sprite
+        pelaaja.Position = paikka;
         pelaaja.Color = Color.DarkBlue;
+        pelaaja.CanRotate = false;
         Add(pelaaja);
 
         pelaajanAse = new AssaultRifle(0, 0); // TODO: luo aseelle uusi skin ja ehkä ääniefekti tai poista eseen sprite ja ammu tulipalloja pelaajasta
         pelaajanAse.Ammo.Value = 1;
         pelaajanAse.FireRate = 10;
-        pelaajanAse.ProjectileCollision = AmmusOsui;
-        pelaajanAse.Image = null;
+        pelaajanAse.Position = pelaaja.Position;
         pelaaja.Add(pelaajanAse);
 
         LuoOhjaimet();
@@ -130,32 +156,84 @@ public class harjoitustyo : PhysicsGame
     }
 
 
-    private void AmmusOsui(PhysicsObject ammus, PhysicsObject kohde)
+
+    private void LuoSeina(Vector paikka, double leveys, double korkeus)
     {
+        PhysicsObject seina = PhysicsObject.CreateStaticObject(leveys, korkeus);
+        seina.Position = paikka;
+        seina.Tag = "seina";
+        seina.Color = Color.Black;
+        seina.CanRotate = false;
+        Add(seina);
+    }
+
+
+
+    private void LuoVihu(Vector paikka, double leveys, double korkeus)
+    {
+        PhysicsObject vihu = new PhysicsObject(leveys, korkeus, Shape.Rectangle);
+        vihu.Position = paikka;
+        vihu.Tag = "vihu";
+        vihu.Color = Color.Red;
+        Add(vihu);
+        vihollistenMaara.Value += 1;
+    }
+
+
+    private void AmmusOsui(PhysicsObject ammus, PhysicsObject osuvaKohde)
+    {
+        if (osuvaKohde.Tag.ToString() == "vihu")
+        {
+            osuvaKohde.Destroy();
+            vihollistenMaara.Value -= 1;
+        }
         ammus.Destroy();
         pelaajanAse.Ammo.Value += 1;
+    }
+
+
+
+    private void Ammu(AssaultRifle ase, Vector suunta)
+    {
+        pelaajanAse.Angle = suunta.Angle;
+        PhysicsObject ammus = ase.Shoot(); // TODO: luo ammukselle uusi skin
+        if (ammus != null)
+        {
+            ammus.Size *= 3;
+            ammus.Tag = "luoti";
+            AddCollisionHandler(ammus, AmmusOsui);
+        }
     }
 
     private void Maalissa(PhysicsObject osuvaKohde, PhysicsObject osuttuKohde)
     {
         if (osuttuKohde.Tag.ToString() == "maali")
         {
-            if (kenttaNro == 3)
+            if (!(vihollistenMaara.Value == 0))
             {
-                MultiSelectWindow peliLapi = new MultiSelectWindow("Viimeinen kenttä läpäisty", peliLapiMenu);
-                Add(peliLapi);
-                peliLapi.AddItemHandler(0, Begin);
-                peliLapi.AddItemHandler(1, Exit);
-                peliLapi.DefaultCancel = -1;
+                MessageDisplay.Clear();
+                MessageDisplay.Add("Tapa ensin kaikki viholliset!");
             }
             else
             {
-                MultiSelectWindow kenttaLapi = new MultiSelectWindow("Kenttä läpäisty", kenttaLapaistyMenu);
-                Add(kenttaLapi);
-                kenttaLapi.AddItemHandler(0, Seuraava);
-                kenttaLapi.AddItemHandler(1, Begin);
-                kenttaLapi.DefaultCancel = -1;
+                if (kenttaNro == 3)
+                {
+                    MultiSelectWindow peliLapi = new MultiSelectWindow("Viimeinen kenttä läpäisty", peliLapiMenu);
+                    Add(peliLapi);
+                    peliLapi.AddItemHandler(0, Begin);
+                    peliLapi.AddItemHandler(1, Exit);
+                    peliLapi.DefaultCancel = -1;
+                }
+                else
+                {
+                    MultiSelectWindow kenttaLapi = new MultiSelectWindow("Kenttä läpäisty", kenttaLapaistyMenu);
+                    Add(kenttaLapi);
+                    kenttaLapi.AddItemHandler(0, Seuraava);
+                    kenttaLapi.AddItemHandler(1, Begin);
+                    kenttaLapi.DefaultCancel = -1;
+                }
             }
+            
         }
     }
 
@@ -167,16 +245,6 @@ public class harjoitustyo : PhysicsGame
     private void Pysayta()
     {
         pelaaja.Stop();
-    }
-
-    private void Ammu(AssaultRifle ase, Vector suunta)
-    {
-        pelaajanAse.Angle = suunta.Angle;
-        PhysicsObject ammus = ase.Shoot(); // TODO: luo ammukselle uusi skin
-        if (ammus != null)
-        {
-            ammus.Size *= 3;
-        }
     }
 
 
