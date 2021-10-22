@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public class harjoitustyo : PhysicsGame
 {
-    private IntMeter vihollistenMaara;
+    private IntMeter vihollistenMaara, elamaMittari, vihunElamat;
     private int kenttaNro = 1;
     private static double nopeus = 100;
     private string[] alkuValikko = { "Aloita", "Tietoa vihollisista", "Asetukset", "Lopeta peli" }, pauseMenu = { "Jatka", "Asetukset", "Palaa aloitusvalikkoon" }, kenttaLapaistyMenu = { "Seuraava kenttä", "Palaa aloitusvalikkoon" }, peliLapiMenu = { "Aloita alusta", "Lopeta peli" };
@@ -48,11 +48,21 @@ public class harjoitustyo : PhysicsGame
             Label laskuri = new Label();
             laskuri.Title = "Vihollisia jäljellä: ";
             laskuri.X = 0;
-            laskuri.Y = Level.Top - 40;
+            laskuri.Y = 350;
             laskuri.TextColor = Color.Black;
             laskuri.Color = Color.White;
             laskuri.BindTo(vihollistenMaara);
             Add(laskuri);
+        }
+        {
+            elamaMittari = new IntMeter(3);
+            elamaMittari.MaxValue = 3;
+            elamaMittari.LowerLimit += ElamaLoppui;
+            ProgressBar elamaPalkki = new ProgressBar(150, 20);
+            elamaPalkki.X = -400;
+            elamaPalkki.Y = 350;
+            elamaPalkki.BindTo(elamaMittari);
+            Add(elamaPalkki);
         }
     }
 
@@ -120,16 +130,35 @@ public class harjoitustyo : PhysicsGame
 
         pelaajanAse = new AssaultRifle(0, 0); // TODO: luo aseelle uusi  ääniefekti ja ammu tulipalloja pelaajasta
         pelaajanAse.Ammo.Value = 1;
-        pelaajanAse.FireRate = 10;
+        pelaajanAse.FireRate = 1;
         pelaajanAse.Position = pelaaja.Position;
         pelaaja.Add(pelaajanAse);
 
         LuoOhjaimet();
 
-        AddCollisionHandler(pelaaja, Maalissa);
+        AddCollisionHandler(pelaaja, PelaajaOsui);
 
         pelaaja.MaxVelocity = 100;
         pelaaja.Mass = 0.01;
+    }
+
+
+    private void ElamaLoppui()
+    {
+        Pause();
+        Label kuolinIlmoitus = new Label(250, 50, "Kuolit!!!");
+        kuolinIlmoitus.Y = 25;
+        kuolinIlmoitus.Color = Color.Black;
+        kuolinIlmoitus.TextColor = Color.Red;
+        kuolinIlmoitus.BorderColor = Color.Red;
+        Add(kuolinIlmoitus);
+        Label anyKey = new Label(500, 50, "Paina välilyöntiä palataksesi alkuvalikkoon.");
+        anyKey.Color = Color.Black;
+        anyKey.TextColor = Color.Red;
+        anyKey.BorderColor = Color.Red;
+        anyKey.Y = -25;
+        Add(anyKey);
+        Keyboard.Listen(Key.Space, ButtonState.Pressed, Begin, null);
     }
 
     private void LuoOhjaimet()
@@ -177,6 +206,14 @@ public class harjoitustyo : PhysicsGame
         vihu.Color = Color.Yellow;
         Add(vihu);
         vihollistenMaara.Value += 1;
+        {
+            vihunElamat = new IntMeter(3);
+            vihunElamat.MaxValue = 3;
+            ProgressBar elamaPalkki = new ProgressBar(10, 5);
+            elamaPalkki.Position = vihu.Position; // TODO: kalibroi vihujen paikat uudestaan
+            elamaPalkki.BindTo(vihunElamat);
+            Add(elamaPalkki);
+        }
     }
 
     private void LuoSeuraajaVihu(Vector paikka, double leveys, double korkeus)
@@ -212,6 +249,7 @@ public class harjoitustyo : PhysicsGame
     {
         if (osuvaKohde.Tag.ToString() == "vihu")
         {
+            vihunElamat.Value -= 1;
             osuvaKohde.Destroy();
             vihollistenMaara.Value -= 1;
             if (vihollistenMaara == 0) maali.Color = Color.Green;
@@ -234,7 +272,7 @@ public class harjoitustyo : PhysicsGame
         }
     }
 
-    private void Maalissa(PhysicsObject osuvaKohde, PhysicsObject osuttuKohde)
+    private void PelaajaOsui(PhysicsObject osuvaKohde, PhysicsObject osuttuKohde)
     {
         if (osuttuKohde.Tag.ToString() == "maali")
         {
@@ -263,6 +301,10 @@ public class harjoitustyo : PhysicsGame
                 }
             }
             
+        }
+        else if (osuttuKohde.Tag.ToString() == "vihu")
+        {
+            elamaMittari.Value -= 1;
         }
     }
 
