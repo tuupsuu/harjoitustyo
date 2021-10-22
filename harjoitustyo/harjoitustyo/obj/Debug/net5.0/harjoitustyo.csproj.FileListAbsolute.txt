@@ -72,3 +72,4 @@ C:\kurssit\ohj1\harjoitustyo\ht\harjoitustyo\harjoitustyo\obj\Debug\net5.0\harjo
 C:\kurssit\ohj1\harjoitustyo\ht\harjoitustyo\harjoitustyo\obj\Debug\net5.0\ref\harjoitustyo.dll
 C:\kurssit\ohj1\harjoitustyo\ht\harjoitustyo\harjoitustyo\obj\Debug\net5.0\harjoitustyo.pdb
 C:\kurssit\ohj1\harjoitustyo\ht\harjoitustyo\harjoitustyo\obj\Debug\net5.0\harjoitustyo.genruntimeconfig.cache
+C:\kurssit\ohj1\harjoitustyo\ht\harjoitustyo\harjoitustyo\bin\Debug\net5.0\Content\kentta_1_1.txt
