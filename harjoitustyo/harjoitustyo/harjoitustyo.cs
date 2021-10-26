@@ -7,12 +7,12 @@ using System.Collections.Generic;
 
 public class harjoitustyo : PhysicsGame
 {
-    private IntMeter vihollistenMaara, elamaMittari, vihunElamat;
+    private IntMeter vihollistenMaara, elamaMittari;
     private int kenttaNro = 1;
     private static double nopeus = 100;
     private string[] alkuValikko = { "Aloita", "Tietoa vihollisista", "Asetukset", "Lopeta peli" }, pauseMenu = { "Jatka", "Asetukset", "Palaa aloitusvalikkoon" }, kenttaLapaistyMenu = { "Seuraava kenttä", "Palaa aloitusvalikkoon" }, peliLapiMenu = { "Aloita alusta", "Lopeta peli" };
     private PhysicsObject pelaaja, maali;
-    private AssaultRifle pelaajanAse;
+    private AssaultRifle pelaajanAse, vihunAse;
     private Vector nopeusYlos = new Vector(0, nopeus), nopeusVasemmalle = new Vector(-nopeus, 0), nopeusAlas = new Vector(0, -nopeus), nopeusOikealle = new Vector(nopeus, 0);
     public override void Begin()
     {
@@ -143,6 +143,7 @@ public class harjoitustyo : PhysicsGame
     }
 
 
+
     private void ElamaLoppui()
     {
         Pause();
@@ -204,16 +205,9 @@ public class harjoitustyo : PhysicsGame
         vihu.Position = paikka;
         vihu.Tag = "vihu";
         vihu.Color = Color.Yellow;
+        // LuoVihunAse(vihu, 1);
         Add(vihu);
         vihollistenMaara.Value += 1;
-        {
-            vihunElamat = new IntMeter(3);
-            vihunElamat.MaxValue = 3;
-            ProgressBar elamaPalkki = new ProgressBar(10, 5);
-            elamaPalkki.Position = vihu.Position; // TODO: kalibroi vihujen paikat uudestaan
-            elamaPalkki.BindTo(vihunElamat);
-            Add(elamaPalkki);
-        }
     }
 
     private void LuoSeuraajaVihu(Vector paikka, double leveys, double korkeus)
@@ -226,6 +220,7 @@ public class harjoitustyo : PhysicsGame
         aivot.Speed = nopeus;
         aivot.DistanceFar = 200;
         vihu.Brain = aivot;
+        // LuoVihunAse(vihu, 1);
         Add(vihu);
         vihollistenMaara.Value += 1;
     }
@@ -240,16 +235,46 @@ public class harjoitustyo : PhysicsGame
         vihu.Color = Color.Brown;
         LabyrinthWandererBrain aivot = new LabyrinthWandererBrain(korkeus, nopeus,"seina");
         vihu.Brain = aivot;
+        // LuoVihunAse(vihu, 1);
         Add(vihu);
         vihollistenMaara.Value += 1;
     }
+
+
+    private void LuoVihunAse(PhysicsObject vihu, double ampumaNopeus)
+    {
+        vihunAse = new AssaultRifle(0, 0); // TODO: luo aseelle uusi  ääniefekti ja ammu tulipalloja vihusta
+        vihunAse.InfiniteAmmo = true;
+        vihunAse.FireRate = ampumaNopeus;
+        vihunAse.Position = vihu.Position;
+        Vector suunta = (pelaaja.Position - vihu.Position).Normalize();
+        vihunAse.Angle = suunta.Angle;
+        vihu.Add(vihunAse);
+
+        Timer ajastin = new Timer();
+        ajastin.Interval = ampumaNopeus;
+        ajastin.Timeout += delegate { VihuAmpuu(suunta); }; // Aliohjelma, jota kutsutaan 3.5 sekunnin välein
+        ajastin.Start();
+    }
+
+    private void VihuAmpuu(Vector suunta)
+    {
+        vihunAse.Angle = suunta.Angle;
+        PhysicsObject ammus = vihunAse.Shoot(); // TODO: luo ammukselle uusi skin eli tulipallo
+        if (ammus != null)
+        {
+            ammus.Size *= 3;
+            ammus.Tag = "luoti";
+            AddCollisionHandler(ammus, AmmusOsui);
+        }
+    }
+
 
 
     private void AmmusOsui(PhysicsObject ammus, PhysicsObject osuvaKohde)
     {
         if (osuvaKohde.Tag.ToString() == "vihu")
         {
-            vihunElamat.Value -= 1;
             osuvaKohde.Destroy();
             vihollistenMaara.Value -= 1;
             if (vihollistenMaara == 0) maali.Color = Color.Green;
@@ -262,7 +287,7 @@ public class harjoitustyo : PhysicsGame
 
     private void Ammu(AssaultRifle ase, Vector suunta)
     {
-        pelaajanAse.Angle = suunta.Angle;
+        ase.Angle = suunta.Angle;
         PhysicsObject ammus = ase.Shoot(); // TODO: luo ammukselle uusi skin eli tulipallo
         if (ammus != null)
         {
