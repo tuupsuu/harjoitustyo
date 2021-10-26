@@ -247,7 +247,7 @@ public class harjoitustyo : PhysicsGame
         vihunAse.InfiniteAmmo = true;
         vihunAse.FireRate = ampumaNopeus;
         vihunAse.Position = vihu.Position;
-        Vector suunta = (pelaaja.Position - vihu.Position).Normalize();
+        Vector suunta = (pelaaja.Position - vihu.Position).Normalize(); // TODO: luo ajastin
         vihunAse.Angle = suunta.Angle;
         vihu.Add(vihunAse);
 
