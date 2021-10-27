@@ -84,22 +84,60 @@ public class harjoitustyo : PhysicsGame
         {
             Level.Background.CreateGradient(Color.BloodRed, Color.SkyBlue); // TODO: luo taustakuva huoneen lattiaksi
             vihollistenMaara.Value = 0;
-            TileMap kentta11 = TileMap.FromLevelAsset("kentta_1_1");
-            kentta11.SetTileMethod('M', LuoMaali);
-            kentta11.SetTileMethod('P', LuoPelaaja);
-            kentta11.SetTileMethod('s', LuoSeina);
-            kentta11.SetTileMethod('N', LuoStaticVihu);
-            kentta11.SetTileMethod('F', LuoSeuraajaVihu);
-            kentta11.SetTileMethod('L', LuoLabyrinttiVihu);
-            kentta11.Execute(30, 40);
+            {
+                TileMap kentta11 = TileMap.FromLevelAsset("kentta_1_1");
+                kentta11.SetTileMethod('M', LuoMaali);
+                kentta11.SetTileMethod('P', LuoPelaaja);
+                kentta11.SetTileMethod('s', LuoSeina);
+                kentta11.Execute(30, 40);
+            }
+            {
+                TileMap kentta11 = TileMap.FromLevelAsset("kentta_1_1");
+                kentta11.SetTileMethod('N', LuoStaticVihu);
+                kentta11.SetTileMethod('F', LuoSeuraajaVihu);
+                kentta11.SetTileMethod('L', LuoLabyrinttiVihu);
+                kentta11.Execute(30, 40);
+            }
+
+
         }
         else if (a == 2)
         {
             Level.Background.CreateGradient(Color.Orange, Color.BrightGreen);
+            vihollistenMaara.Value = 0;
+            {
+                TileMap kentta11 = TileMap.FromLevelAsset("harjoitusKentta");
+                kentta11.SetTileMethod('M', LuoMaali);
+                kentta11.SetTileMethod('P', LuoPelaaja);
+                kentta11.SetTileMethod('s', LuoSeina);
+                kentta11.Execute(30, 40);
+            }
+            {
+                TileMap kentta11 = TileMap.FromLevelAsset("harjoitusKentta");
+                kentta11.SetTileMethod('N', LuoStaticVihu);
+                kentta11.SetTileMethod('F', LuoSeuraajaVihu);
+                kentta11.SetTileMethod('L', LuoLabyrinttiVihu);
+                kentta11.Execute(30, 40);
+            }
         }
         else if (a == 3)
         {
             Level.Background.CreateGradient(Color.White, Color.Black);
+            vihollistenMaara.Value = 0;
+            {
+                TileMap kentta11 = TileMap.FromLevelAsset("kentta_1_1");
+                kentta11.SetTileMethod('M', LuoMaali);
+                kentta11.SetTileMethod('P', LuoPelaaja);
+                kentta11.SetTileMethod('s', LuoSeina);
+                kentta11.Execute(30, 40);
+            }
+            {
+                TileMap kentta11 = TileMap.FromLevelAsset("kentta_1_1");
+                kentta11.SetTileMethod('N', LuoStaticVihu);
+                kentta11.SetTileMethod('F', LuoSeuraajaVihu);
+                kentta11.SetTileMethod('L', LuoLabyrinttiVihu);
+                kentta11.Execute(30, 40);
+            }
         }
 
         Level.CreateBorders();
@@ -205,7 +243,7 @@ public class harjoitustyo : PhysicsGame
         vihu.Position = paikka;
         vihu.Tag = "vihu";
         vihu.Color = Color.Yellow;
-        // LuoVihunAse(vihu, 1);
+        LuoVihunAse(vihu, 1);
         Add(vihu);
         vihollistenMaara.Value += 1;
     }
@@ -220,7 +258,7 @@ public class harjoitustyo : PhysicsGame
         aivot.Speed = nopeus;
         aivot.DistanceFar = 200;
         vihu.Brain = aivot;
-        // LuoVihunAse(vihu, 1);
+        LuoVihunAse(vihu, 1);
         Add(vihu);
         vihollistenMaara.Value += 1;
     }
@@ -235,7 +273,7 @@ public class harjoitustyo : PhysicsGame
         vihu.Color = Color.Brown;
         LabyrinthWandererBrain aivot = new LabyrinthWandererBrain(korkeus, nopeus,"seina");
         vihu.Brain = aivot;
-        // LuoVihunAse(vihu, 1);
+        LuoVihunAse(vihu, 1);
         Add(vihu);
         vihollistenMaara.Value += 1;
     }
@@ -247,23 +285,25 @@ public class harjoitustyo : PhysicsGame
         vihunAse.InfiniteAmmo = true;
         vihunAse.FireRate = ampumaNopeus;
         vihunAse.Position = vihu.Position;
-        Vector suunta = (pelaaja.Position - vihu.Position).Normalize(); // TODO: luo ajastin
-        vihunAse.Angle = suunta.Angle;
         vihu.Add(vihunAse);
 
         Timer ajastin = new Timer();
-        ajastin.Interval = ampumaNopeus;
-        ajastin.Timeout += delegate { VihuAmpuu(suunta); }; // Aliohjelma, jota kutsutaan 3.5 sekunnin välein
+        ajastin.Interval = 0.1;
+        ajastin.Timeout += delegate { VihuAmpuu(vihu); };
         ajastin.Start();
+        return;
+        
     }
 
-    private void VihuAmpuu(Vector suunta)
+
+    private void VihuAmpuu(PhysicsObject vihu)
     {
+        Vector suunta = (pelaaja.Position - vihu.Position).Normalize();
         vihunAse.Angle = suunta.Angle;
         PhysicsObject ammus = vihunAse.Shoot(); // TODO: luo ammukselle uusi skin eli tulipallo
         if (ammus != null)
         {
-            ammus.Size *= 3;
+            ammus.Size *= 1;
             ammus.Tag = "luoti";
             AddCollisionHandler(ammus, AmmusOsui);
         }
@@ -291,7 +331,7 @@ public class harjoitustyo : PhysicsGame
         PhysicsObject ammus = ase.Shoot(); // TODO: luo ammukselle uusi skin eli tulipallo
         if (ammus != null)
         {
-            ammus.Size *= 3;
+            ammus.Size *= 1;
             ammus.Tag = "luoti";
             AddCollisionHandler(ammus, AmmusOsui);
         }
