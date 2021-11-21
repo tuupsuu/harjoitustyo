@@ -1,0 +1,17 @@
+   F    F  s F  s LL s LL s LL s LL s  N
+ LL sNNs     s    ss   ss   ss   ss   ss
+ LL ssss        s    s    s    s    s   
+        ssssss                          
+   Nssss                NN  NN          
+NNss                   NN    NN   s     
+L   FFFF sL     NssN      FF      s LL  
+  NsFFFF sL    N PMs FF   FF      ssssss
+L   FFFF sL     NssN FFNN    NN   s LL  
+NNss                    NN  NN    s     
+NFFNssss  sss                           
+    N       s                           
+s       LL  s  ssss s s   s    s    s   
+  L sssssssss  sFN  s ssLLs   s s   s   
+     N      s  sss  s s sLs  s   s  sN  
+ L    FF       sFN  s s  ss  sssss  sFF 
+               sLL  s s   s s     s ssss

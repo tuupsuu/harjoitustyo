@@ -5,27 +5,100 @@ using Jypeli.Widgets;
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// @author Topias Liljegren
+/// @version 21.11.2021
+/// </summary>
 public class harjoitustyo : PhysicsGame
 {
+    /// <summary>
+    /// alustetaan muuttujat
+    /// </summary>
+    private readonly Image taustaKuva = LoadImage("HT_taustakuva_1"), pelaajaKuva = LoadImage("pelaaja_1"), seinaKuva = LoadImage("tesselaatio_1");
     private IntMeter vihollistenMaara, elamaMittari;
     private int kenttaNro = 1;
-    private static double nopeus = 100;
+    private const double nopeus = 100;
     private string[] alkuValikko = { "Aloita", "Lopeta peli" }, pauseMenu = { "Jatka", "Palaa aloitusvalikkoon" }, kenttaLapaistyMenu = { "Seuraava kenttä", "Palaa aloitusvalikkoon" }, peliLapiMenu = { "Aloita alusta", "Lopeta peli" };
     private PhysicsObject pelaaja, maali;
     private AssaultRifle pelaajanAse;
     private Vector nopeusYlos = new Vector(0, nopeus), nopeusVasemmalle = new Vector(-nopeus, 0), nopeusAlas = new Vector(0, -nopeus), nopeusOikealle = new Vector(nopeus, 0);
+    /// <summary>
+    /// peli jossa ammutaan häiriköiviä neliöitä
+    /// </summary>
     public override void Begin()
     {
         ClearAll();
         kenttaNro = 1;
-        MultiSelectWindow alkuValikkoV = new MultiSelectWindow("Dungeon Rush", alkuValikko);
+        MultiSelectWindow alkuValikkoV = new MultiSelectWindow("Night rush", alkuValikko);
         alkuValikkoV.DefaultCancel = -1;
         Add(alkuValikkoV);
-        alkuValikkoV.AddItemHandler(0, SeuraavaKentta);
+        alkuValikkoV.AddItemHandler(0, Intro);
         alkuValikkoV.AddItemHandler(1, Exit);
+        Level.Background.Image = taustaKuva;
+        Level.Background.ScaleToLevelFull();
     }
 
 
+    /// <summary>
+    /// pelin tarina alustetaan
+    /// </summary>
+    private void Intro()
+    {
+        ClearAll();
+        Level.BackgroundColor = Color.Black;
+        MessageDisplay.Add("It is a peaceful night");
+        MessageDisplay.X = 400;
+        MessageDisplay.Y = 200;
+
+
+        Timer ajastin = new Timer();
+        ajastin.Interval = 1;
+        int i = 0;
+        ajastin.Timeout += delegate { i++;  SeuraavaTeksti(i);};
+        ajastin.Start();
+        Keyboard.Listen(Key.Space, ButtonState.Pressed, SeuraavaKentta, null);
+    }
+
+
+    /// <summary>
+    /// näytetään seuraava dia introsta
+    /// </summary>
+    /// <param name="numerot">monesko dia on menossa</param>
+    private void SeuraavaTeksti(int numerot)
+    {
+        MessageDisplay.Clear();
+        MessageDisplay.X = 400;
+        MessageDisplay.Y = 200;
+        if (numerot == 1)
+        {
+            MessageDisplay.Add("Or at least it was");
+        }
+        else if (numerot == 2)
+        {
+            MessageDisplay.Add("Until those other squares started making a fuss");
+            MessageDisplay.X = 350;
+        }
+        else if (numerot == 3)
+        {
+            MessageDisplay.Add("My sleep wont be interrupted like");
+            MessageDisplay.Add("this without consequences");
+            MessageDisplay.X = 350;
+        }
+        else if (numerot == 4 )
+        {
+            MessageDisplay.Add("It's time to square up!");
+        }
+        else if (numerot >= 5)
+        {
+            MessageDisplay.Add("Paina välilyöntiä aloittaaksesi peli");
+            MessageDisplay.X = 350;
+        }
+    }
+
+
+    /// <summary>
+    /// siirrytään seuraavaan kenttään ja poistetaan kaikki edellinen
+    /// </summary>
     private void SeuraavaKentta()
     {
         ClearAll();
@@ -39,6 +112,9 @@ public class harjoitustyo : PhysicsGame
     }
 
 
+    /// <summary>
+    /// luodaan pistelaskuri joka kertoo montako vihollista on jäljellä ja paljonko elämiä pelaajalla on
+    /// </summary>
     private void LuoPistelaskuri()
     {
         {
@@ -65,11 +141,15 @@ public class harjoitustyo : PhysicsGame
     }
 
 
+    /// <summary>
+    /// luodaan kenttä
+    /// </summary>
+    /// <param name="a">monesko kenttä pitää luoda</param>
     private void LuoKentta(int a)
     {
         if (a == 1)
         {
-            Level.Background.CreateGradient(Color.BloodRed, Color.SkyBlue);
+            Level.Background.CreateGradient(Color.White, Color.DarkBlue);
             vihollistenMaara.Value = 0;
             {
                 TileMap kentta11 = TileMap.FromLevelAsset("kentta_1_1");
@@ -90,17 +170,17 @@ public class harjoitustyo : PhysicsGame
         }
         else if (a == 2)
         {
-            Level.Background.CreateGradient(Color.Orange, Color.BrightGreen);
+            Level.Background.CreateGradient(Color.DarkBlue, Color.BloodRed);
             vihollistenMaara.Value = 0;
             {
-                TileMap kentta11 = TileMap.FromLevelAsset("harjoitusKentta");
+                TileMap kentta11 = TileMap.FromLevelAsset("kentta_2_1");
                 kentta11.SetTileMethod('M', LuoMaali);
                 kentta11.SetTileMethod('P', LuoPelaaja);
                 kentta11.SetTileMethod('s', LuoSeina);
                 kentta11.Execute(30, 40);
             }
             {
-                TileMap kentta11 = TileMap.FromLevelAsset("harjoitusKentta");
+                TileMap kentta11 = TileMap.FromLevelAsset("kentta_2_1");
                 kentta11.SetTileMethod('N', LuoVihu, 0);
                 kentta11.SetTileMethod('F', LuoVihu, 1);
                 kentta11.SetTileMethod('L', LuoVihu, 2);
@@ -109,17 +189,17 @@ public class harjoitustyo : PhysicsGame
         }
         else if (a == 3)
         {
-            Level.Background.CreateGradient(Color.White, Color.Black);
+            Level.Background.CreateGradient(Color.BloodRed, Color.Black);
             vihollistenMaara.Value = 0;
             {
-                TileMap kentta11 = TileMap.FromLevelAsset("kentta_1_1");
+                TileMap kentta11 = TileMap.FromLevelAsset("kentta_3_1");
                 kentta11.SetTileMethod('M', LuoMaali);
                 kentta11.SetTileMethod('P', LuoPelaaja);
                 kentta11.SetTileMethod('s', LuoSeina);
                 kentta11.Execute(30, 40);
             }
             {
-                TileMap kentta11 = TileMap.FromLevelAsset("kentta_1_1");
+                TileMap kentta11 = TileMap.FromLevelAsset("kentta_3_1");
                 kentta11.SetTileMethod('N', LuoVihu, 0);
                 kentta11.SetTileMethod('F', LuoVihu, 1);
                 kentta11.SetTileMethod('L', LuoVihu, 2);
@@ -131,6 +211,13 @@ public class harjoitustyo : PhysicsGame
         Camera.ZoomToLevel();
     }
 
+
+    /// <summary>
+    /// luodaan maali josta pääsee seuraavaan kenttään
+    /// </summary>
+    /// <param name="paikka">sijainti tasossa</param>
+    /// <param name="leveys">maalin leveys</param>
+    /// <param name="korkeus">maalin korkeus</param>
     private void LuoMaali(Vector paikka, double leveys, double korkeus)
     {
         maali = PhysicsObject.CreateStaticObject(leveys, korkeus);
@@ -142,20 +229,27 @@ public class harjoitustyo : PhysicsGame
         Add(maali);
     }
 
+
+    /// <summary>
+    /// luodaan pelaaja
+    /// </summary>
+    /// <param name="paikka">sijainti tasossa</param>
+    /// <param name="leveys">pelaajan leveys</param>
+    /// <param name="korkeus">pelaajan korkeus</param>
     private void LuoPelaaja(Vector paikka, double leveys, double korkeus)
     {
-        Keyboard.Listen(Key.Enter, ButtonState.Pressed, Seuraava, "seuraava kenttä");
+        Keyboard.Listen(Key.Enter, ButtonState.Pressed, Seuraava, "seuraava kenttä"); // developer tool kentän skippaamiseksi
 
         pelaaja = new PhysicsObject(leveys * 0.75, korkeus * 0.75, Shape.Rectangle);
         pelaaja.Position = paikka;
-        pelaaja.Color = Color.DarkBlue;
+        pelaaja.Image = pelaajaKuva;
         pelaaja.CanRotate = false;
         pelaaja.Tag = "pelaaja";
         Add(pelaaja);
 
         pelaajanAse = new AssaultRifle(0, 0);
-        pelaajanAse.Ammo.Value = 1;
-        pelaajanAse.FireRate = 1;
+        pelaajanAse.Ammo.Value = 2;
+        pelaajanAse.FireRate = 2;
         pelaajanAse.Position = pelaaja.Position;
         pelaaja.Add(pelaajanAse);
 
@@ -168,7 +262,9 @@ public class harjoitustyo : PhysicsGame
     }
 
 
-
+    /// <summary>
+    /// tuhotaan kaikki objektit kentässä ja ilmoitetaan pelaajalle, että hän on kuollut
+    /// </summary>
     private void ElamaLoppui()
     {
         List<GameObject> objektit = GetAllObjects();
@@ -195,6 +291,10 @@ public class harjoitustyo : PhysicsGame
         Keyboard.Listen(Key.Space, ButtonState.Pressed, Begin, null);
     }
 
+
+    /// <summary>
+    /// luodaan ohjaimet joilla pelataan
+    /// </summary>
     private void LuoOhjaimet()
     {
         Keyboard.Listen(Key.A, ButtonState.Down, Liiku, "liikuttaa pelaajaa vasemmalle", nopeusVasemmalle);
@@ -219,19 +319,30 @@ public class harjoitustyo : PhysicsGame
     }
 
 
-
+    /// <summary>
+    /// luodaan seinä kenttään
+    /// </summary>
+    /// <param name="paikka">sijainti tasossa</param>
+    /// <param name="leveys">seinän leveys</param>
+    /// <param name="korkeus">seinän korkeus</param>
     private void LuoSeina(Vector paikka, double leveys, double korkeus)
     {
         PhysicsObject seina = PhysicsObject.CreateStaticObject(leveys, korkeus);
         seina.Position = paikka;
         seina.Tag = "seina";
-        seina.Color = Color.Black;
+        seina.Image = seinaKuva;
         seina.CanRotate = false;
         Add(seina);
     }
 
 
-
+    /// <summary>
+    /// luodaan vihollinen
+    /// </summary>
+    /// <param name="paikka">sijainti tasossa</param>
+    /// <param name="leveys">vihollisen leveys</param>
+    /// <param name="korkeus">vihollisen korkeus</param>
+    /// <param name="versio">mikä vihollinen luodaan</param>
     private void LuoVihu(Vector paikka, double leveys, double korkeus, int versio)
     {
         PhysicsObject vihu = new PhysicsObject(leveys, korkeus, Shape.Rectangle);
@@ -264,6 +375,11 @@ public class harjoitustyo : PhysicsGame
     }
 
 
+    /// <summary>
+    /// mitä tehdään kun ammus osuu johonkin
+    /// </summary>
+    /// <param name="ammus">ammus jonka osumaan reagoidaan</param>
+    /// <param name="osuvaKohde">kohde johon ammus osuu</param>
     private void AmmusOsui(PhysicsObject ammus, PhysicsObject osuvaKohde)
     {
         if (osuvaKohde.Tag.ToString() == "vihu")
@@ -277,7 +393,11 @@ public class harjoitustyo : PhysicsGame
     }
 
 
-
+    /// <summary>
+    /// mitä tehdään kun pelaaja painaa ampuma nappia
+    /// </summary>
+    /// <param name="ase">ase jolla ammutaan</param>
+    /// <param name="suunta">suunta johon ammutaan</param>
     private void Ammu(AssaultRifle ase, Vector suunta)
     {
         ase.Angle = suunta.Angle;
@@ -290,6 +410,12 @@ public class harjoitustyo : PhysicsGame
         }
     }
 
+
+    /// <summary>
+    /// mitä tehdään kun pelaaja osuu johonkin
+    /// </summary>
+    /// <param name="osuvaKohde">kohde joa osuu, eli pelaaja</param>
+    /// <param name="osuttuKohde">kohde johon on osuttu</param>
     private void PelaajaOsui(PhysicsObject osuvaKohde, PhysicsObject osuttuKohde)
     {
         if (osuttuKohde.Tag.ToString() == "maali")
@@ -326,17 +452,29 @@ public class harjoitustyo : PhysicsGame
         }
     }
 
+
+    /// <summary>
+    /// liikutetaan pelaajaa haluttuun suuntaan
+    /// </summary>
+    /// <param name="nopeus">haluttu suunta</param>
     private void Liiku(Vector nopeus)
     {
         pelaaja.Push(nopeus);
     }
 
+
+    /// <summary>
+    /// pysäytetään pelaaja kun nostetaan liikuntanäppäin
+    /// </summary>
     private void Pysayta()
     {
         pelaaja.Stop();
     }
 
 
+    /// <summary>
+    /// pysäytetään peli ja avataan valikko josta voi joko lopettaa pelin ja jatkaa peliä
+    /// </summary>
     private void PauseValikko()
     {
         IsPaused = true;
@@ -347,6 +485,10 @@ public class harjoitustyo : PhysicsGame
         pauseMenuV.AddItemHandler(1, Begin);
     }
 
+
+    /// <summary>
+    /// kasvatetaan kenttä numeroa ja siirrytään seuraavan kentän alustamiseen
+    /// </summary>
     private void Seuraava()
     {
         kenttaNro++;
