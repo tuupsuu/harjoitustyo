@@ -16,9 +16,9 @@ public class harjoitustyo : PhysicsGame
     /// </summary>
     private readonly Image taustaKuva = LoadImage("HT_taustakuva_1"), pelaajaKuva = LoadImage("pelaaja_1"), seinaKuva = LoadImage("tesselaatio_1");
     private IntMeter vihollistenMaara, elamaMittari;
-    private int kenttaNro = 1;
+    private int kenttaNro = 1, pelaajanHP = 3;
     private const double nopeus = 100;
-    private string[] alkuValikko = { "Aloita", "Lopeta peli" }, pauseMenu = { "Jatka", "Palaa aloitusvalikkoon" }, kenttaLapaistyMenu = { "Seuraava kenttä", "Palaa aloitusvalikkoon" }, peliLapiMenu = { "Aloita alusta", "Lopeta peli" };
+    private string[] alkuValikko = { "Aloita", "Lopeta peli" }, pauseMenu = { "Jatka", "Palaa aloitusvalikkoon" }, kenttaLapaistyMenu = { "Seuraava kenttä", "Palaa aloitusvalikkoon" }, peliLapiMenu = { "Aloita alusta", "Lopeta peli" }; // taulukkoja muutama
     private PhysicsObject pelaaja, maali;
     private AssaultRifle pelaajanAse;
     private Vector nopeusYlos = new Vector(0, nopeus), nopeusVasemmalle = new Vector(-nopeus, 0), nopeusAlas = new Vector(0, -nopeus), nopeusOikealle = new Vector(nopeus, 0);
@@ -29,6 +29,7 @@ public class harjoitustyo : PhysicsGame
     {
         ClearAll();
         kenttaNro = 1;
+        pelaajanHP = 3;
         MultiSelectWindow alkuValikkoV = new MultiSelectWindow("Night rush", alkuValikko);
         alkuValikkoV.DefaultCancel = -1;
         Add(alkuValikkoV);
@@ -48,7 +49,7 @@ public class harjoitustyo : PhysicsGame
         Level.BackgroundColor = Color.Black;
         MessageDisplay.Add("It is a peaceful night");
         MessageDisplay.X = 400;
-        MessageDisplay.Y = 200;
+        MessageDisplay.Y = 300;
 
 
         Timer ajastin = new Timer();
@@ -68,7 +69,7 @@ public class harjoitustyo : PhysicsGame
     {
         MessageDisplay.Clear();
         MessageDisplay.X = 400;
-        MessageDisplay.Y = 200;
+        MessageDisplay.Y = 300;
         if (numerot == 1)
         {
             MessageDisplay.Add("Or at least it was");
@@ -97,11 +98,12 @@ public class harjoitustyo : PhysicsGame
 
 
     /// <summary>
-    /// siirrytään seuraavaan kenttään ja poistetaan kaikki edellinen
+    /// siirrytään seuraavaan kenttään, poistetaan kaikki edellinen ja annetaan pelaajalle 1HP takaisin
     /// </summary>
     private void SeuraavaKentta()
     {
         ClearAll();
+        pelaajanHP++;
         LuoPistelaskuri();
 
         if (kenttaNro == 1) LuoKentta(1);
@@ -129,11 +131,11 @@ public class harjoitustyo : PhysicsGame
             Add(laskuri);
         }
         {
-            elamaMittari = new IntMeter(3);
-            elamaMittari.MaxValue = 3;
+            elamaMittari = new IntMeter(pelaajanHP);
+            elamaMittari.MaxValue = pelaajanHP;
             elamaMittari.LowerLimit += ElamaLoppui;
-            ProgressBar elamaPalkki = new ProgressBar(150, 20);
-            elamaPalkki.X = -400;
+            ProgressBar elamaPalkki = new ProgressBar(pelaajanHP * 50, 20);
+            elamaPalkki.X = -300;
             elamaPalkki.Y = 350;
             elamaPalkki.BindTo(elamaMittari);
             Add(elamaPalkki);
@@ -267,7 +269,7 @@ public class harjoitustyo : PhysicsGame
     /// </summary>
     private void ElamaLoppui()
     {
-        List<GameObject> objektit = GetAllObjects();
+        List<GameObject> objektit = GetAllObjects(); // lista ja for looppi
         for (int i = 0; i < objektit.Count; i++)
         {
             Explosion rajahdys = new Explosion(100);
@@ -376,7 +378,7 @@ public class harjoitustyo : PhysicsGame
 
 
     /// <summary>
-    /// mitä tehdään kun ammus osuu johonkin
+    /// reagoidaan siihen kun ammus osuu johonkin
     /// </summary>
     /// <param name="ammus">ammus jonka osumaan reagoidaan</param>
     /// <param name="osuvaKohde">kohde johon ammus osuu</param>
@@ -394,7 +396,7 @@ public class harjoitustyo : PhysicsGame
 
 
     /// <summary>
-    /// mitä tehdään kun pelaaja painaa ampuma nappia
+    /// ammutaan pelaajan haluamaan suuntaan
     /// </summary>
     /// <param name="ase">ase jolla ammutaan</param>
     /// <param name="suunta">suunta johon ammutaan</param>
@@ -412,7 +414,7 @@ public class harjoitustyo : PhysicsGame
 
 
     /// <summary>
-    /// mitä tehdään kun pelaaja osuu johonkin
+    /// reagoidaan siihe nkun pelaaja osuu johonkin
     /// </summary>
     /// <param name="osuvaKohde">kohde joa osuu, eli pelaaja</param>
     /// <param name="osuttuKohde">kohde johon on osuttu</param>
@@ -449,6 +451,7 @@ public class harjoitustyo : PhysicsGame
         else if (osuttuKohde.Tag.ToString() == "vihu")
         {
             elamaMittari.Value -= 1;
+            pelaajanHP--;
         }
     }
 
