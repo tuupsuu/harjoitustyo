@@ -16,12 +16,12 @@ public class harjoitustyo : PhysicsGame
     /// </summary>
     private readonly Image taustaKuva = LoadImage("HT_taustakuva_1"), pelaajaKuva = LoadImage("pelaaja_1"), seinaKuva = LoadImage("tesselaatio_1");
     private IntMeter vihollistenMaara, elamaMittari;
-    private int kenttaNro = 1, pelaajanHP = 3;
+    private int kenttaNro = 1, pelaajanHP = 3, vaikeusTaso = 1;
     private const double nopeus = 100;
-    private string[] alkuValikko = { "Aloita", "Lopeta peli" }, pauseMenu = { "Jatka", "Palaa aloitusvalikkoon" }, kenttaLapaistyMenu = { "Seuraava kenttä", "Palaa aloitusvalikkoon" }, peliLapiMenu = { "Aloita alusta", "Lopeta peli" }; // taulukkoja muutama
+    private string[] alkuValikko = { "Aloita","vaikeustaso", "Lopeta peli" }, pauseMenu = { "Jatka", "Palaa aloitusvalikkoon" }, kenttaLapaistyMenu = { "Seuraava kenttä", "Palaa aloitusvalikkoon" }, peliLapiMenu = { "Aloita alusta", "Lopeta peli" }; // taulukkoja muutama
     private PhysicsObject pelaaja, maali;
     private AssaultRifle pelaajanAse;
-    private Vector nopeusYlos = new Vector(0, nopeus), nopeusVasemmalle = new Vector(-nopeus, 0), nopeusAlas = new Vector(0, -nopeus), nopeusOikealle = new Vector(nopeus, 0);
+    private readonly Vector nopeusYlos = new Vector(0, nopeus), nopeusVasemmalle = new Vector(-nopeus, 0), nopeusAlas = new Vector(0, -nopeus), nopeusOikealle = new Vector(nopeus, 0);
     /// <summary>
     /// peli jossa ammutaan häiriköiviä neliöitä
     /// </summary>
@@ -34,7 +34,8 @@ public class harjoitustyo : PhysicsGame
         alkuValikkoV.DefaultCancel = -1;
         Add(alkuValikkoV);
         alkuValikkoV.AddItemHandler(0, Intro);
-        alkuValikkoV.AddItemHandler(1, Exit);
+        alkuValikkoV.AddItemHandler(1, Vaikeustaso);
+        alkuValikkoV.AddItemHandler(2, Exit);
         Level.Background.Image = taustaKuva;
         Level.Background.ScaleToLevelFull();
     }
@@ -58,6 +59,18 @@ public class harjoitustyo : PhysicsGame
         ajastin.Timeout += delegate { i++;  SeuraavaTeksti(i);};
         ajastin.Start();
         Keyboard.Listen(Key.Space, ButtonState.Pressed, SeuraavaKentta, null);
+    }
+
+
+    /// <summary>
+    /// vaihdetaan pelin vaikeustasoa
+    /// </summary>
+    private void Vaikeustaso()
+    {
+        MultiSelectWindow vaikeusValikko = new MultiSelectWindow("Vaikeustaso", new string[] {"Helppo", "Vaikea" });
+        vaikeusValikko.AddItemHandler(0, delegate { vaikeusTaso = 2; Begin(); MessageDisplay.Clear(); MessageDisplay.X = 0; MessageDisplay.Y = 0; MessageDisplay.Add("Vaikeustaso vaihdettu helpoksi!"); });
+        vaikeusValikko.AddItemHandler(1, delegate { vaikeusTaso = 1; Begin(); MessageDisplay.Clear(); MessageDisplay.X = 0; MessageDisplay.Y = 0; MessageDisplay.Add("Vaikeustaso vaihdettu vaikeaksi!"); });
+        Add(vaikeusValikko);
     }
 
 
@@ -98,23 +111,6 @@ public class harjoitustyo : PhysicsGame
 
 
     /// <summary>
-    /// siirrytään seuraavaan kenttään, poistetaan kaikki edellinen ja annetaan pelaajalle 1HP takaisin
-    /// </summary>
-    private void SeuraavaKentta()
-    {
-        ClearAll();
-        pelaajanHP++;
-        LuoPistelaskuri();
-
-        if (kenttaNro == 1) LuoKentta(1);
-        else if (kenttaNro == 2) LuoKentta(2);
-        else if (kenttaNro == 3) LuoKentta(3);
-        else if (kenttaNro > 3) Exit();
-
-    }
-
-
-    /// <summary>
     /// luodaan pistelaskuri joka kertoo montako vihollista on jäljellä ja paljonko elämiä pelaajalla on
     /// </summary>
     private void LuoPistelaskuri()
@@ -144,6 +140,22 @@ public class harjoitustyo : PhysicsGame
 
 
     /// <summary>
+    /// siirrytään seuraavaan kenttään, poistetaan kaikki edellinen ja annetaan pelaajalle 1HP takaisin
+    /// </summary>
+    private void SeuraavaKentta()
+    {
+        ClearAll();
+        pelaajanHP++;
+        LuoPistelaskuri();
+
+        if (kenttaNro == 1) LuoKentta(1);
+        else if (kenttaNro == 2) LuoKentta(2);
+        else if (kenttaNro == 3) LuoKentta(3);
+        else if (kenttaNro > 3) Exit();
+    }
+
+
+    /// <summary>
     /// luodaan kenttä
     /// </summary>
     /// <param name="a">monesko kenttä pitää luoda</param>
@@ -153,66 +165,65 @@ public class harjoitustyo : PhysicsGame
         {
             Level.Background.CreateGradient(Color.White, Color.DarkBlue);
             vihollistenMaara.Value = 0;
-            {
-                TileMap kentta11 = TileMap.FromLevelAsset("kentta_1_1");
-                kentta11.SetTileMethod('M', LuoMaali);
-                kentta11.SetTileMethod('P', LuoPelaaja);
-                kentta11.SetTileMethod('s', LuoSeina);
-                kentta11.Execute(30, 40);
-            }
-            {
-                TileMap kentta11 = TileMap.FromLevelAsset("kentta_1_1");
-                kentta11.SetTileMethod('N', LuoVihu, 0);
-                kentta11.SetTileMethod('F', LuoVihu, 1);
-                kentta11.SetTileMethod('L', LuoVihu, 2);
-                kentta11.Execute(30, 40);
-            }
-
-
+            LuoKartta(1);
         }
         else if (a == 2)
         {
             Level.Background.CreateGradient(Color.DarkBlue, Color.BloodRed);
             vihollistenMaara.Value = 0;
-            {
-                TileMap kentta11 = TileMap.FromLevelAsset("kentta_2_1");
-                kentta11.SetTileMethod('M', LuoMaali);
-                kentta11.SetTileMethod('P', LuoPelaaja);
-                kentta11.SetTileMethod('s', LuoSeina);
-                kentta11.Execute(30, 40);
-            }
-            {
-                TileMap kentta11 = TileMap.FromLevelAsset("kentta_2_1");
-                kentta11.SetTileMethod('N', LuoVihu, 0);
-                kentta11.SetTileMethod('F', LuoVihu, 1);
-                kentta11.SetTileMethod('L', LuoVihu, 2);
-                kentta11.Execute(30, 40);
-            }
+            LuoKartta(2);
         }
         else if (a == 3)
         {
             Level.Background.CreateGradient(Color.BloodRed, Color.Black);
             vihollistenMaara.Value = 0;
-            {
-                TileMap kentta11 = TileMap.FromLevelAsset("kentta_3_1");
-                kentta11.SetTileMethod('M', LuoMaali);
-                kentta11.SetTileMethod('P', LuoPelaaja);
-                kentta11.SetTileMethod('s', LuoSeina);
-                kentta11.Execute(30, 40);
-            }
-            {
-                TileMap kentta11 = TileMap.FromLevelAsset("kentta_3_1");
-                kentta11.SetTileMethod('N', LuoVihu, 0);
-                kentta11.SetTileMethod('F', LuoVihu, 1);
-                kentta11.SetTileMethod('L', LuoVihu, 2);
-                kentta11.Execute(30, 40);
-            }
+            LuoKartta(3);
         }
-
         Level.CreateBorders();
         Camera.ZoomToLevel();
     }
 
+
+    /// <summary>
+    /// luodaan kenttän oliot yksi kerrallaan
+    /// </summary>
+    /// <param name="leveli">mikä on kartan nimi</param>
+    private void LuoKartta(int leveli)
+    {
+        string kentta = Kentta(leveli);
+        TileMap kentta11 = TileMap.FromLevelAsset(kentta);
+        kentta11.SetTileMethod('M', LuoMaali);
+        kentta11.SetTileMethod('P', LuoPelaaja);
+        kentta11.SetTileMethod('s', LuoSeina);
+        kentta11.SetTileMethod('N', LuoVihu, 0);
+        kentta11.SetTileMethod('F', LuoVihu, 1);
+        kentta11.SetTileMethod('L', LuoVihu, 2);
+        kentta11.Execute(30, 40);
+    }
+
+
+    /// <summary>
+    /// valitaan mikä kenttä tulee seuraavana riippuen vaikeustasosta 
+    /// </summary>
+    /// <param name="taso">monesko taso pitää ladata</param>
+    /// <returns>kentän nimi</returns>
+    private string Kentta(int taso)
+    {
+        string tasoNimi = "";
+        if (vaikeusTaso == 1)
+        {
+            if (taso == 1) tasoNimi = "kentta_1_1";
+            else if (taso == 2) tasoNimi = "kentta_2_1";
+            else if (taso == 3) tasoNimi = "kentta_3_1";
+        }
+        else if (vaikeusTaso == 2)
+        {
+            if (taso == 1) tasoNimi = "kentta_1_2";
+            else if (taso == 2) tasoNimi = "kentta_2_2";
+            else if (taso == 3) tasoNimi = "kentta_3_2";
+        }
+        return tasoNimi;
+    }
 
     /// <summary>
     /// luodaan maali josta pääsee seuraavaan kenttään
@@ -355,18 +366,18 @@ public class harjoitustyo : PhysicsGame
         }
         else if (versio == 1)
         {
-            vihu = new PhysicsObject(leveys * 0.75, korkeus * 0.75, Shape.Rectangle);
+            vihu.Size = vihu.Size * 0.75;
             vihu.Color = Color.Red;
-            FollowerBrain aivot = new FollowerBrain("pelaaja");
+            FollowerBrain aivot = new ("pelaaja");
             aivot.Speed = nopeus;
             aivot.DistanceFar = 200;
             vihu.Brain = aivot;
         }
         else if (versio == 2)
         {
-            vihu = new PhysicsObject(leveys * 0.5, korkeus * 0.5, Shape.Rectangle);
+            vihu.Size = vihu.Size * 0.5;
             vihu.Color = Color.Brown;
-            LabyrinthWandererBrain aivot = new LabyrinthWandererBrain(korkeus, nopeus, "seina");
+            LabyrinthWandererBrain aivot = new (korkeus, nopeus, "seina");
             vihu.Brain = aivot;
         }
         vihu.CanRotate = false;
