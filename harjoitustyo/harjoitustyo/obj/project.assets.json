@@ -26,10 +26,10 @@
           "lib/netstandard2.0/FontStashSharp.dll": {}
         }
       },
-      "Jypeli.FarseerPhysics.NET/1.0.10": {
+      "Jypeli.FarseerPhysics.NET/1.0.11": {
         "type": "package",
         "dependencies": {
-          "Jypeli.NET": "10.1.5"
+          "Jypeli.NET": "10.1.6"
         },
         "compile": {
           "lib/net5.0/Jypeli.FarseerPhysics.dll": {}
@@ -38,7 +38,7 @@
           "lib/net5.0/Jypeli.FarseerPhysics.dll": {}
         }
       },
-      "Jypeli.NET/10.1.5": {
+      "Jypeli.NET/10.1.6": {
         "type": "package",
         "dependencies": {
           "FontStashSharp": "0.9.2",
@@ -216,28 +216,28 @@
         "lib/netstandard2.0/FontStashSharp.dll"
       ]
     },
-    "Jypeli.FarseerPhysics.NET/1.0.10": {
-      "sha512": "VPLnPdyN2DjKuaXTU/E/6vRh/x69z3kmL+f7YSSV9Khi4RJbkhBCv2dwAMPT6o8Gn35SVO36xSsroI8MlFsWMA==",
+    "Jypeli.FarseerPhysics.NET/1.0.11": {
+      "sha512": "Wl364j+6xxIOAnlyKfcdC38sGQk1s2YhrtSce0npirYY4Bo5HNase26x0o9L6Fi3cjmXsS37BvGdAAdCGIucKA==",
       "type": "package",
-      "path": "jypeli.farseerphysics.net/1.0.10",
+      "path": "jypeli.farseerphysics.net/1.0.11",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Farseer.txt",
-        "jypeli.farseerphysics.net.1.0.10.nupkg.sha512",
+        "jypeli.farseerphysics.net.1.0.11.nupkg.sha512",
         "jypeli.farseerphysics.net.nuspec",
         "lib/net5.0/Jypeli.FarseerPhysics.dll"
       ]
     },
-    "Jypeli.NET/10.1.5": {
-      "sha512": "TNJe00nqZWREz2mNnfXj+emKqzN/Og2LQzjcHmp9TznJnda7KqKZb232aruMt5S+1+gG0gIPB0ehomeDEd0Fsg==",
+    "Jypeli.NET/10.1.6": {
+      "sha512": "4bHfmPqmWE03H1AsFT269CZa0Hek1JxFIdeJAmZnVl5QIBaiWfnqWMLfCZuV82s010SdZFIM+0hhHKYHe9vdug==",
       "type": "package",
-      "path": "jypeli.net/10.1.5",
+      "path": "jypeli.net/10.1.6",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Jypeli.txt",
-        "jypeli.net.10.1.5.nupkg.sha512",
+        "jypeli.net.10.1.6.nupkg.sha512",
         "jypeli.net.nuspec",
         "jypeli_logo.png",
         "lib/net5.0/FontStashSharp.dll",
@@ -424,19 +424,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Topias\\.nuget\\packages\\": {}
+    "C:\\Users\\topia\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\kurssit\\ohj1\\harjoitustyo\\ht\\harjoitustyo\\harjoitustyo\\harjoitustyo.csproj",
+      "projectUniqueName": "C:\\Users\\topia\\github\\ht\\harjoitustyo\\harjoitustyo\\harjoitustyo\\harjoitustyo.csproj",
       "projectName": "harjoitustyo",
-      "projectPath": "C:\\kurssit\\ohj1\\harjoitustyo\\ht\\harjoitustyo\\harjoitustyo\\harjoitustyo.csproj",
-      "packagesPath": "C:\\Users\\Topias\\.nuget\\packages\\",
-      "outputPath": "C:\\kurssit\\ohj1\\harjoitustyo\\ht\\harjoitustyo\\harjoitustyo\\obj\\",
+      "projectPath": "C:\\Users\\topia\\github\\ht\\harjoitustyo\\harjoitustyo\\harjoitustyo\\harjoitustyo.csproj",
+      "packagesPath": "C:\\Users\\topia\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\topia\\github\\ht\\harjoitustyo\\harjoitustyo\\harjoitustyo\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Topias\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\topia\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -486,7 +486,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }

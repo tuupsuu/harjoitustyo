@@ -83,3 +83,12 @@ C:\kurssit\ohj1\harjoitustyo\ht\harjoitustyo\harjoitustyo\bin\Debug\net5.0\Conte
 C:\kurssit\ohj1\harjoitustyo\ht\harjoitustyo\harjoitustyo\bin\Debug\net5.0\Content\kentta_1_2.txt
 C:\kurssit\ohj1\harjoitustyo\ht\harjoitustyo\harjoitustyo\bin\Debug\net5.0\Content\kentta_2_2.txt
 C:\kurssit\ohj1\harjoitustyo\ht\harjoitustyo\harjoitustyo\bin\Debug\net5.0\Content\kentta_3_2.txt
+C:\Users\topia\github\ht\harjoitustyo\harjoitustyo\harjoitustyo\bin\Debug\net5.0\Content\harjoitusKentta.txt
+C:\Users\topia\github\ht\harjoitustyo\harjoitustyo\harjoitustyo\bin\Debug\net5.0\Content\HT_taustakuva_1.jpg
+C:\Users\topia\github\ht\harjoitustyo\harjoitustyo\harjoitustyo\bin\Debug\net5.0\Content\kentta_1_2.txt
+C:\Users\topia\github\ht\harjoitustyo\harjoitustyo\harjoitustyo\bin\Debug\net5.0\Content\kentta_2_1.txt
+C:\Users\topia\github\ht\harjoitustyo\harjoitustyo\harjoitustyo\bin\Debug\net5.0\Content\kentta_2_2.txt
+C:\Users\topia\github\ht\harjoitustyo\harjoitustyo\harjoitustyo\bin\Debug\net5.0\Content\kentta_3_1.txt
+C:\Users\topia\github\ht\harjoitustyo\harjoitustyo\harjoitustyo\bin\Debug\net5.0\Content\kentta_3_2.txt
+C:\Users\topia\github\ht\harjoitustyo\harjoitustyo\harjoitustyo\bin\Debug\net5.0\Content\pelaaja_1.jpg
+C:\Users\topia\github\ht\harjoitustyo\harjoitustyo\harjoitustyo\bin\Debug\net5.0\Content\tesselaatio_1.jpg

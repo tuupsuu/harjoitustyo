@@ -8,8 +8,8 @@
     ".NETCoreApp,Version=v5.0": {
       "harjoitustyo/1.0.0": {
         "dependencies": {
-          "Jypeli.FarseerPhysics.NET": "1.0.10",
-          "Jypeli.NET": "10.1.5"
+          "Jypeli.FarseerPhysics.NET": "1.0.11",
+          "Jypeli.NET": "10.1.6"
         },
         "runtime": {
           "harjoitustyo.dll": {}
@@ -37,26 +37,26 @@
           }
         }
       },
-      "Jypeli.FarseerPhysics.NET/1.0.10": {
+      "Jypeli.FarseerPhysics.NET/1.0.11": {
         "dependencies": {
-          "Jypeli.NET": "10.1.5"
+          "Jypeli.NET": "10.1.6"
         },
         "runtime": {
           "lib/net5.0/Jypeli.FarseerPhysics.dll": {
-            "assemblyVersion": "1.0.10.0",
-            "fileVersion": "1.0.10.0"
+            "assemblyVersion": "1.0.11.0",
+            "fileVersion": "1.0.11.0"
           }
         }
       },
-      "Jypeli.NET/10.1.5": {
+      "Jypeli.NET/10.1.6": {
         "dependencies": {
           "FontStashSharp": "0.9.2",
           "System.Drawing.Common": "5.0.1"
         },
         "runtime": {
           "lib/net5.0/Jypeli.dll": {
-            "assemblyVersion": "10.1.5.0",
-            "fileVersion": "10.1.5.0"
+            "assemblyVersion": "10.1.6.0",
+            "fileVersion": "10.1.6.0"
           },
           "lib/net5.0/MonoGame.Framework.dll": {
             "assemblyVersion": "1.0.0.0",
@@ -190,19 +190,19 @@
       "path": "fontstashsharp/0.9.2",
       "hashPath": "fontstashsharp.0.9.2.nupkg.sha512"
     },
-    "Jypeli.FarseerPhysics.NET/1.0.10": {
+    "Jypeli.FarseerPhysics.NET/1.0.11": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-VPLnPdyN2DjKuaXTU/E/6vRh/x69z3kmL+f7YSSV9Khi4RJbkhBCv2dwAMPT6o8Gn35SVO36xSsroI8MlFsWMA==",
-      "path": "jypeli.farseerphysics.net/1.0.10",
-      "hashPath": "jypeli.farseerphysics.net.1.0.10.nupkg.sha512"
+      "sha512": "sha512-Wl364j+6xxIOAnlyKfcdC38sGQk1s2YhrtSce0npirYY4Bo5HNase26x0o9L6Fi3cjmXsS37BvGdAAdCGIucKA==",
+      "path": "jypeli.farseerphysics.net/1.0.11",
+      "hashPath": "jypeli.farseerphysics.net.1.0.11.nupkg.sha512"
     },
-    "Jypeli.NET/10.1.5": {
+    "Jypeli.NET/10.1.6": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-TNJe00nqZWREz2mNnfXj+emKqzN/Og2LQzjcHmp9TznJnda7KqKZb232aruMt5S+1+gG0gIPB0ehomeDEd0Fsg==",
-      "path": "jypeli.net/10.1.5",
-      "hashPath": "jypeli.net.10.1.5.nupkg.sha512"
+      "sha512": "sha512-4bHfmPqmWE03H1AsFT269CZa0Hek1JxFIdeJAmZnVl5QIBaiWfnqWMLfCZuV82s010SdZFIM+0hhHKYHe9vdug==",
+      "path": "jypeli.net/10.1.6",
+      "hashPath": "jypeli.net.10.1.6.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/5.0.0": {
       "type": "package",

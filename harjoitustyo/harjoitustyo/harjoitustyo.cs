@@ -54,7 +54,7 @@ public class harjoitustyo : PhysicsGame
 
 
         Timer ajastin = new Timer();
-        ajastin.Interval = 1;
+        ajastin.Interval = 3;
         int i = 0;
         ajastin.Timeout += delegate { i++;  SeuraavaTeksti(i);};
         ajastin.Start();
