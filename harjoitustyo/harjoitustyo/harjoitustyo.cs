@@ -18,10 +18,16 @@ public class harjoitustyo : PhysicsGame
     private IntMeter vihollistenMaara, elamaMittari;
     private int kenttaNro = 1, pelaajanHP = 3, vaikeusTaso = 1;
     private const double nopeus = 100;
-    private string[] alkuValikko = { "Aloita","vaikeustaso", "Lopeta peli" }, pauseMenu = { "Jatka", "Palaa aloitusvalikkoon" }, kenttaLapaistyMenu = { "Seuraava kenttä", "Palaa aloitusvalikkoon" }, peliLapiMenu = { "Aloita alusta", "Lopeta peli" }; // taulukkoja muutama
+    private string[] alkuValikko = { "Aloita","vaikeustaso", "Lopeta peli" }, 
+                    pauseMenu = { "Jatka", "Palaa aloitusvalikkoon" }, 
+                    kenttaLapaistyMenu = { "Seuraava kenttä", "Palaa aloitusvalikkoon" }, 
+                    peliLapiMenu = { "Aloita alusta", "Lopeta peli" }; // taulukkoja muutama
     private PhysicsObject pelaaja, maali;
     private AssaultRifle pelaajanAse;
-    private readonly Vector nopeusYlos = new Vector(0, nopeus), nopeusVasemmalle = new Vector(-nopeus, 0), nopeusAlas = new Vector(0, -nopeus), nopeusOikealle = new Vector(nopeus, 0);
+    private readonly Vector nopeusYlos = new Vector(0, nopeus), 
+                            nopeusVasemmalle = new Vector(-nopeus, 0), 
+                            nopeusAlas = new Vector(0, -nopeus), 
+                            nopeusOikealle = new Vector(nopeus, 0);
     /// <summary>
     /// peli jossa ammutaan häiriköiviä neliöitä
     /// </summary>
