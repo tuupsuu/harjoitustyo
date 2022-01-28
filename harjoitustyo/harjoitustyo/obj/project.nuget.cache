@@ -1,19 +1,19 @@
 {
   "version": 2,
-  "dgSpecHash": "ZW68mXMeVhDaFG7C49uBa3y9RMGnqT7Y/pcjn+CqCpbnQtCJmxD9qPZSHWyJDslKz27eI7nMAbHx+chKNedFJA==",
+  "dgSpecHash": "KFR+3oWKjuR4K5sUgfigQIvPK4/ulvNTloGGlcLTUSqc0gMwLKyYxyZaSYm7VY2Cltarevfdo54eFNuHJiwsig==",
   "success": true,
-  "projectFilePath": "C:\\Users\\topia\\github\\ht\\harjoitustyo\\harjoitustyo\\harjoitustyo\\harjoitustyo.csproj",
+  "projectFilePath": "C:\\kurssit\\ohj1\\harjoitustyo\\ht\\harjoitustyo\\harjoitustyo\\harjoitustyo.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\topia\\.nuget\\packages\\cyotek.drawing.bitmapfont\\2.0.1\\cyotek.drawing.bitmapfont.2.0.1.nupkg.sha512",
-    "C:\\Users\\topia\\.nuget\\packages\\fontstashsharp\\0.9.2\\fontstashsharp.0.9.2.nupkg.sha512",
-    "C:\\Users\\topia\\.nuget\\packages\\jypeli.farseerphysics.net\\1.0.11\\jypeli.farseerphysics.net.1.0.11.nupkg.sha512",
-    "C:\\Users\\topia\\.nuget\\packages\\jypeli.net\\10.1.6\\jypeli.net.10.1.6.nupkg.sha512",
-    "C:\\Users\\topia\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
-    "C:\\Users\\topia\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
-    "C:\\Users\\topia\\.nuget\\packages\\stbimagesharp\\2.22.4\\stbimagesharp.2.22.4.nupkg.sha512",
-    "C:\\Users\\topia\\.nuget\\packages\\stbtruetypesharp\\1.24.7\\stbtruetypesharp.1.24.7.nupkg.sha512",
-    "C:\\Users\\topia\\.nuget\\packages\\system.drawing.common\\5.0.1\\system.drawing.common.5.0.1.nupkg.sha512",
-    "C:\\Users\\topia\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512"
+    "C:\\Users\\Topias\\.nuget\\packages\\cyotek.drawing.bitmapfont\\2.0.1\\cyotek.drawing.bitmapfont.2.0.1.nupkg.sha512",
+    "C:\\Users\\Topias\\.nuget\\packages\\fontstashsharp\\0.9.2\\fontstashsharp.0.9.2.nupkg.sha512",
+    "C:\\Users\\Topias\\.nuget\\packages\\jypeli.farseerphysics.net\\1.0.11\\jypeli.farseerphysics.net.1.0.11.nupkg.sha512",
+    "C:\\Users\\Topias\\.nuget\\packages\\jypeli.net\\10.1.6\\jypeli.net.10.1.6.nupkg.sha512",
+    "C:\\Users\\Topias\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
+    "C:\\Users\\Topias\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
+    "C:\\Users\\Topias\\.nuget\\packages\\stbimagesharp\\2.22.4\\stbimagesharp.2.22.4.nupkg.sha512",
+    "C:\\Users\\Topias\\.nuget\\packages\\stbtruetypesharp\\1.24.7\\stbtruetypesharp.1.24.7.nupkg.sha512",
+    "C:\\Users\\Topias\\.nuget\\packages\\system.drawing.common\\5.0.1\\system.drawing.common.5.0.1.nupkg.sha512",
+    "C:\\Users\\Topias\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512"
   ],
   "logs": []
 }
